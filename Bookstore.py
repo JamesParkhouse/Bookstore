@@ -177,7 +177,7 @@ def delete_book():
                 print(f"ID {delete_id} does not match any records.")
             # Delete selected record from database.
             else:
-                cursor.execute('''DELETE FROM book WHERE id = ?''', (id))
+                cursor.execute('''DELETE FROM book WHERE id = ?''', (delete_id))
                 db.commit()
                 print(f"\nRecord with ID {delete_id} has been deleted.")
                 break
