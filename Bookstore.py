@@ -50,10 +50,12 @@ def enter_book():
     """
     with sqlite3.connect('ebookstore.db') as db:
         cursor = db.cursor()
+        # Take inputs for new book data. Ensure id and qty are integers.
         while True:
             id = (input("Enter book ID: "))
             if id.isnumeric():
                 id = int(id)
+                # Ensure input ID does not already exist in database.
                 try:
                     cursor.execute('''SELECT COUNT(*) FROM book 
                                    WHERE id = ?''', (id,))
@@ -75,11 +77,13 @@ def enter_book():
                 break
             else:
                 print("Please enter quantity as an integer.")
-        
+
+        # Commit changes to database.
         cursor.execute('''INSERT INTO book 
                 (id, title, author,qty)VALUES (?, ?, ?, ?)''', 
                 (id, title, author, qty))
         db.commit()
+        # Print confirmation of new database record.
         print(f"\n{title} has been added to the database. Full record:")
         print(f"id: {id} | title: {title} | author: {author} | qty: {qty}\n")
         print("-"*10)
